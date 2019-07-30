@@ -31,5 +31,9 @@ let num2 = VersionNumber.init(numberString: argv[2])
 if num1 == num2 {
     print("Это одинаковые номера")
 } else {
-    print("Это разные номера")
+    if num1 > num2 {
+        print("Первый номер больше второго")
+    } else {
+        print("Второй номер больше первого")
+    }
 }
