@@ -8,5 +8,28 @@
 
 import Foundation
 
-print("Hello, World!")
+let argv = CommandLine.arguments
 
+if argv.count == 1 {
+    NSLog("Ошибка, вы не ввели параметры")
+    exit(1)
+}
+
+if argv.count == 2 {
+    NSLog("Вы ввели только один аргумент для сравнения")
+    exit(2)
+}
+
+if argv.count > 3 {
+    NSLog("Вы ввели больше двух номеров")
+    exit(3)
+}
+
+let num1 = VersionNumber.init(numberString: argv[1])
+let num2 = VersionNumber.init(numberString: argv[2])
+
+if num1 == num2 {
+    print("Это одинаковые номера)
+} else {
+    print("Это разные номера")
+}
