@@ -29,7 +29,7 @@ let num1 = VersionNumber.init(numberString: argv[1])
 let num2 = VersionNumber.init(numberString: argv[2])
 
 if num1 == num2 {
-    print("Это одинаковые номера)
+    print("Это одинаковые номера")
 } else {
     print("Это разные номера")
 }
