@@ -8,8 +8,6 @@
 
 import Foundation
 
-public class VersionNumber {
-    private var number: [Int] = []
     private func correctNumberTest(_ str: String) -> Bool {
         for char in str {
             if !char.isNumber && (char != ".") {
@@ -19,47 +17,51 @@ public class VersionNumber {
         return true
     }
 
-    public init(numberString: String) {
-        if !correctNumberTest(numberString) || numberString.isEmpty {
+    public func verificator(_ numberString1: String, _ numberString2: String) -> Bool {
+        if !correctNumberTest(numberString1) || numberString1.isEmpty || !correctNumberTest(numberString2) || numberString2.isEmpty {
             NSLog("Подана некорректная строка")
             exit(0)
         } else {
-            stringPars(numberString)
-            self.zeroRemovve()
+            var number1: [Int] = stringPars(numberString1)
+            var number2: [Int] = stringPars(numberString2)
+            number1 = zeroRemovve(number1)
+            number2 = zeroRemovve(number2)
+            return condition(number1, number2)
         }
     }
 
-    private func stringPars(_ str: String) {
+    private func stringPars(_ str: String) -> [Int] {
+        var number: [Int] = []
         var index = 0
         while !str[str.index(str.startIndex, offsetBy: index)].isNumber && (index < str.count) {
-            self.number.append(0)
+            number.append(0)
             index += 1
         }
         let nums = str.split(separator: ".")
         for substr in nums {
-            self.number.append(Int(String(substr))!)
+            number.append(Int(String(substr))!)
         }
+        return number
     }
 
-    private func zeroRemovve() {
-        if !self.number.isEmpty {
-            while self.number.last! == 0 {
-                self.number.removeLast()
+private func zeroRemovve(_ inputNumber: [Int]) -> [Int] {
+    var number: [Int] = inputNumber
+        if !number.isEmpty {
+            while number.last! == 0 {
+                number.removeLast()
             }
         }
-    }
-
+    return number
 }
 
-extension VersionNumber {
-    static func ==(left: VersionNumber, right: VersionNumber) -> Bool {
-        if left.number.count != right.number.count {
+    private func condition(_ left: [Int], _ right: [Int]) -> Bool {
+        if left.count != right.count {
             return false
         } else {
             var response: Bool = true
             var index = 0
-            while response && (index < left.number.count) {
-                if left.number[index] != right.number[index] {
+            while response && (index < left.count) {
+                if left[index] != right[index] {
                     response = false
                 } else {
                     index += 1
@@ -69,59 +71,3 @@ extension VersionNumber {
         }
     }
 
-    static func >(left: VersionNumber, right: VersionNumber) -> Bool {
-        let count = left.number.count < right.number.count ? left.number.count : right.number.count
-        var response = 0
-        var index = 0
-        while (response == 0) && (index < count) {
-            if left.number[index] > right.number[index] {
-                response = 1
-            } else if left.number[index] < right.number[index] {
-                response = -1
-            } else {
-                index += 1
-            }
-        }
-        if response == 1 {
-            return true
-        } else if response == -1 {
-            return false
-        } else {
-            if left.number.count == right.number.count {
-                return false
-            } else if count == right.number.count {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
-    static func <(left: VersionNumber, right: VersionNumber) -> Bool {
-        let count = left.number.count < right.number.count ? left.number.count : right.number.count
-        var response = 0
-        var index = 0
-        while (response == 0) && (index < count) {
-            if left.number[index] < right.number[index] {
-                response = 1
-            } else if left.number[index] > right.number[index] {
-                response = -1
-            } else {
-                index += 1
-            }
-        }
-        if response == 1 {
-            return true
-        } else if response == -1 {
-            return false
-        } else {
-            if left.number.count == right.number.count {
-                return false
-            } else if count == right.number.count {
-                return false
-            } else {
-                return true
-            }
-        }
-    }
-}

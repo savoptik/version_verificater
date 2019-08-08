@@ -25,15 +25,8 @@ if argv.count > 3 {
     exit(3)
 }
 
-let num1 = VersionNumber.init(numberString: argv[1])
-let num2 = VersionNumber.init(numberString: argv[2])
-
-if num1 == num2 {
-    print("Это одинаковые номера")
+if verificator(argv[1], argv[2]) {
+    print("Номера равны")
 } else {
-    if num1 > num2 {
-        print("Первый номер больше второго")
-    } else {
-        print("Второй номер больше первого")
-    }
+    print("номера не равны")
 }
